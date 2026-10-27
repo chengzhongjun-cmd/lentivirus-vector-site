@@ -32,7 +32,8 @@ export default function LentivirusVectorMVP() {
   const copy = {
     en: {
       nav: {
-        intelligence: "Blog",
+        intelligence: "Articles",
+        collaboration: "Collaborate",
         lifecycle: "Frameworks",
         toolbox: "Toolbox",
         perspective: "Perspective",
@@ -42,13 +43,34 @@ export default function LentivirusVectorMVP() {
       hero: {
         badge: "Blog Platform • LVV • In Vivo CAR-T • CMC • AI-CMC",
         title:
-          "A Blog Platform for CGT Industrialization Intelligence.",
+          "Turning Lentiviral Vector Science into Scalable Manufacturing.",
         subtitle:
-          "LentivirusVector.com publishes operator-informed analysis on CAR-T manufacturing, lentiviral vector manufacturing, tech transfer strategy, CDMO management, AI-CMC, and CGT industrialization.",
-        primary: "Read Latest Articles",
-        secondary: "Explore Frameworks",
+          "Practical perspectives on LVV upstream and downstream process development, process characterization, CMC, technology transfer, and emerging in-vivo CAR-T manufacturing — connecting technical insight with industry collaboration.",
+        primary: "Explore Technical Insights",
+        secondary: "Explore Collaboration",
         mapTitle: "What This Blog Covers",
         mapBadge: "Industry Intelligence",
+      },
+      collaboration: {
+        title: "Where Technical Expertise Meets Industry Needs",
+        subtitle: "Distinct pathways for scientific discussion and potential collaboration; no services or outcomes are guaranteed.",
+        cards: [
+          ["CDMOs & Biotechs", "Discuss LVV USP/DSP workflows, yield and impurity trade-offs, scale-up, process characterization, tech transfer readiness, and PPQ planning."],
+          ["Suppliers & Technology Providers", "Explore application fit for filters, chromatography media, single-use systems, analytical tools, and CGT manufacturing materials."],
+          ["Research & Strategic Partners", "Exchange perspectives on targeted lentiviral vectors, in-vivo CAR-T manufacturing challenges, and translational CMC strategy."],
+        ],
+        action: "Start a Collaboration Discussion",
+        note: "Independent educational content. Collaboration inquiries are exploratory and subject to appropriate confidentiality and conflict-of-interest review.",
+      },
+      expertise: {
+        title: "Technical Focus: From Process Development to Manufacturing Readiness",
+        items: [
+          ["USP", "Suspension cell culture, transient transfection, harvest strategy, scale-sensitive process variables."],
+          ["DSP", "Clarification, nuclease treatment, chromatography, UF/DF, filtration, and recovery / impurity trade-offs."],
+          ["CMC & PPQ", "Risk-based process characterization, analytical readiness, control strategy, comparability, and validation planning."],
+          ["Tech Transfer", "Knowledge transfer packages, equipment fit, CDMO alignment, gap assessments, and receiving-site readiness."],
+          ["In-Vivo CAR-T", "Targeted-vector considerations, scalable purification, product-quality attributes, and emerging manufacturing challenges."],
+        ],
       },
       gapSteps: [
         ["Manufacturing Reality", "How scientific promise becomes operational complexity"],
@@ -202,7 +224,8 @@ export default function LentivirusVectorMVP() {
     },
     zh: {
       nav: {
-        intelligence: "博客",
+        intelligence: "文章",
+        collaboration: "合作机会",
         lifecycle: "框架",
         toolbox: "工具箱",
         perspective: "运营视角",
@@ -211,13 +234,34 @@ export default function LentivirusVectorMVP() {
       },
       hero: {
         badge: "博客平台 • 慢病毒载体 • 体内 CAR-T • CMC • AI-CMC",
-        title: "面向 CGT 产业化的博客型行业情报平台。",
+        title: "推动慢病毒载体从工艺科学走向规模化生产。",
         subtitle:
-          "LentivirusVector.com 发布关于 CAR-T 制造、慢病毒载体制造、技术转移策略、CDMO 管理、AI-CMC 和 CGT 产业化的运营型分析。",
-        primary: "阅读最新文章",
-        secondary: "查看框架",
+          "聚焦慢病毒载体上游与下游工艺开发、工艺表征、CMC、技术转移和体内 CAR-T 制造，连接实用技术洞察与产业合作。",
+        primary: "查看技术文章",
+        secondary: "探索合作机会",
         mapTitle: "本博客关注什么",
         mapBadge: "产业情报",
+      },
+      collaboration: {
+        title: "将技术经验连接到产业需求",
+        subtitle: "为技术交流及潜在合作提供不同入口；不承诺具体服务或结果。",
+        cards: [
+          ["CDMO 与生物技术企业", "交流 LVV 上下游工艺、回收率与杂质权衡、工艺放大、表征、技术转移准备度及 PPQ 规划。"],
+          ["供应商与技术平台", "探讨过滤器、层析介质、一次性系统、分析仪器和 CGT 关键原材料的应用匹配。"],
+          ["科研与战略合作伙伴", "交流靶向慢病毒载体、体内 CAR-T 制造挑战及转化 CMC 策略。"],
+        ],
+        action: "发起合作交流",
+        note: "本站内容为独立教育性分析；合作咨询仅为初步交流，须遵守保密及利益冲突审查要求。",
+      },
+      expertise: {
+        title: "专业技术领域：从工艺开发到生产准备",
+        items: [
+          ["上游 USP", "悬浮培养、瞬时转染、收获策略及与规模相关的关键工艺变量。"],
+          ["下游 DSP", "澄清、核酸酶处理、层析、超滤/透析过滤及过滤回收率与杂质控制。"],
+          ["CMC 与 PPQ", "基于风险的工艺表征、分析方法准备度、控制策略、可比性和验证规划。"],
+          ["技术转移", "技术转移包、设备适配、CDMO 协同、差距分析及接收方准备度。"],
+          ["体内 CAR-T", "靶向载体、可放大纯化、产品质量属性及新兴制造挑战。"],
+        ],
       },
       gapSteps: [
         ["制造现实", "科学前景如何转化为运营复杂性"],
@@ -406,6 +450,7 @@ export default function LentivirusVectorMVP() {
             <a href="#perspective" className="hover:text-slate-950">
               {t.nav.perspective}
             </a>
+            <a href="#collaborate" className="hover:text-slate-950">{t.nav.collaboration}</a>
             
           </nav>
           <div className="flex items-center gap-3">
@@ -442,13 +487,13 @@ export default function LentivirusVectorMVP() {
             </p>
             <div className="flex flex-wrap gap-4">
               <a
-                href="#newsletter"
+                href="#blog"
                 className="rounded-2xl bg-slate-950 px-7 py-4 font-semibold text-white shadow-lg transition hover:scale-105 hover:bg-slate-800"
               >
                 {t.hero.primary}
               </a>
               <a
-                href="#newsletter"
+                href="#collaborate"
                 className="rounded-2xl border bg-white px-7 py-4 font-semibold text-slate-950 shadow-sm hover:bg-slate-50"
               >
                 {t.hero.secondary}
@@ -472,6 +517,37 @@ export default function LentivirusVectorMVP() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      <section id="expertise" className="bg-slate-50 px-6 py-20">
+        <div className="mx-auto max-w-7xl">
+          <h2 className="mb-8 text-3xl font-bold tracking-tight">{t.expertise.title}</h2>
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {t.expertise.items.map(([name, detail]) => (
+              <div key={name} className="rounded-2xl border bg-white p-6">
+                <h3 className="mb-3 text-xl font-semibold">{name}</h3>
+                <p className="leading-relaxed text-slate-600">{detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="collaborate" className="bg-white px-6 py-20">
+        <div className="mx-auto max-w-7xl">
+          <h2 className="mb-3 text-3xl font-bold">{t.collaboration.title}</h2>
+          <p className="mb-8 max-w-3xl text-slate-600">{t.collaboration.subtitle}</p>
+          <div className="grid gap-6 md:grid-cols-3">
+            {t.collaboration.cards.map(([name, detail]) => (
+              <div key={name} className="rounded-2xl border bg-slate-50 p-7">
+                <h3 className="mb-3 text-xl font-semibold">{name}</h3>
+                <p className="leading-relaxed text-slate-600">{detail}</p>
+                <a className="mt-5 inline-block font-semibold text-cyan-800 underline underline-offset-4" href="#newsletter">{t.collaboration.action}</a>
+              </div>
+            ))}
+          </div>
+          <p className="mt-6 text-sm text-slate-500">{t.collaboration.note}</p>
         </div>
       </section>
 
@@ -682,9 +758,9 @@ export default function LentivirusVectorMVP() {
                 </tbody>
               </table>
             </div>
-            <button className="mt-6 w-full rounded-2xl bg-slate-950 px-6 py-4 font-semibold text-white hover:bg-slate-800">
+            <a href="#newsletter" className="mt-6 block w-full rounded-2xl bg-slate-950 px-6 py-4 text-center font-semibold text-white hover:bg-slate-800">
               {t.labels.requestMatrix}
-            </button>
+            </a>
           </div>
         </div>
       </section>
