@@ -11,6 +11,8 @@ type Insight = {
   link: string;
   status: "live" | "coming-soon";
   readTime: string;
+  publishedAt?: string;
+  summary?: string;
 };
 
 function validateInsights(insights: readonly Insight[]) {
@@ -28,6 +30,7 @@ function validateInsights(insights: readonly Insight[]) {
 
 export default function LentivirusVectorMVP() {
   const [lang, setLang] = useState<Lang>("en");
+  const [query, setQuery] = useState("");
 
   const copy = {
     en: {
@@ -154,6 +157,8 @@ export default function LentivirusVectorMVP() {
           link: "/articles/in-vivo-car-t-clinical-results-2026",
           status: "live",
           readTime: "7 min read",
+          publishedAt: "2026-11-25",
+          summary: "Compare early CD19/CD20 and BCMA clinical results, Kelonia’s three dose levels, response durability and implications for lentiviral vector potency.",
         },
         {
           title: "The Cost of Failure: How Poor Tech Transfer Destroys CAR-T Startups",
@@ -330,6 +335,8 @@ export default function LentivirusVectorMVP() {
           link: "/articles/in-vivo-car-t-clinical-results-2026",
           status: "live",
           readTime: "7 分钟阅读",
+          publishedAt: "2026-11-25",
+          summary: "比较 CD19/CD20 与 BCMA 体内 CAR-T 临床数据、Kelonia 三个剂量组、缓解持续时间及慢病毒载体效力的启示。",
         },
         {
           title: "失败的成本：糟糕的技术转移如何摧毁 CAR-T 创业公司",
@@ -388,8 +395,9 @@ export default function LentivirusVectorMVP() {
   const t = copy[lang];
 
   const insightsAreValid = useMemo(() => validateInsights(t.insights), [t.insights]);
-  const featuredArticle = t.insights[0];
-  const secondaryArticles = t.insights.slice(1);
+  const published = (t.insights as readonly Insight[]).filter(a => a.status === "live").sort((a,b) => (b.publishedAt ?? "").localeCompare(a.publishedAt ?? ""));
+  const featuredArticle = published[0];
+  const secondaryArticles = published.filter(a => a.link !== featuredArticle?.link && (a.title + " " + a.tag + " " + (a.summary ?? "")).toLowerCase().includes(query.trim().toLowerCase()));
 
   if (!insightsAreValid) {
     return (
@@ -439,156 +447,55 @@ export default function LentivirusVectorMVP() {
         </div>
       </header>
 
-      <section className="relative overflow-hidden bg-white px-6 py-24">
-        <div className="absolute right-[-120px] top-[-120px] h-96 w-96 rounded-full bg-cyan-100 blur-3xl" />
-        <div className="absolute bottom-[-140px] left-[-140px] h-96 w-96 rounded-full bg-blue-100 blur-3xl" />
-
-        <div className="relative mx-auto grid max-w-7xl items-center gap-12 md:grid-cols-2">
-          <div>
-            <div className="mb-6 inline-flex rounded-full border bg-slate-50 px-4 py-2 text-sm font-medium text-slate-700">
-              {t.hero.badge}
-            </div>
-            <h1 className="mb-6 text-5xl font-bold leading-tight tracking-tight md:text-6xl">
-              {t.hero.title}
-            </h1>
-            <p className="mb-8 max-w-2xl text-xl leading-relaxed text-slate-600">
-              {t.hero.subtitle}
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <a
-                href="#newsletter"
-                className="rounded-2xl bg-slate-950 px-7 py-4 font-semibold text-white shadow-lg transition hover:scale-105 hover:bg-slate-800"
-              >
-                {t.hero.primary}
-              </a>
-              <a
-                href="#newsletter"
-                className="rounded-2xl border bg-white px-7 py-4 font-semibold text-slate-950 shadow-sm hover:bg-slate-50"
-              >
-                {t.hero.secondary}
-              </a>
-            </div>
+      <section className="bg-white px-6 py-10 md:py-16">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 border-b border-slate-200 pb-6">
+            <p className="text-xs font-semibold uppercase tracking-widest text-teal-700">{lang === "en" ? "Independent industry analysis" : "独立行业分析"}</p>
+            <h1 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">{lang === "en" ? "Lentiviral vectors. In vivo CAR-T. CMC." : "慢病毒载体 · 体内 CAR-T · CMC"}</h1>
+            <p className="mt-2 max-w-3xl text-slate-600">{lang === "en" ? "Clinical developments, vector manufacturing and the science of bringing advanced therapies to patients." : "聚焦临床进展、载体制造及先进疗法产业化。"}</p>
           </div>
-
-          <div className="rounded-3xl border bg-slate-950 p-8 text-white shadow-2xl">
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-2xl font-semibold">{t.hero.mapTitle}</h2>
-              <span className="rounded-full bg-cyan-400/20 px-3 py-1 text-sm text-cyan-200">
-                {t.hero.mapBadge}
-              </span>
+          {featuredArticle && <article className="grid overflow-hidden rounded-3xl bg-slate-950 text-white md:grid-cols-[1.25fr_0.75fr]">
+            <div className="p-7 md:p-12">
+              <div className="flex flex-wrap items-center gap-3 text-sm text-teal-200"><span className="font-semibold uppercase tracking-wide">{lang === "en" ? "Latest article" : "最新文章"}</span><span aria-hidden="true">·</span><time dateTime={featuredArticle.publishedAt}>{featuredArticle.publishedAt}</time><span>{featuredArticle.readTime}</span></div>
+              <h2 className="mt-5 text-3xl font-bold leading-tight tracking-tight md:text-5xl"><a href={featuredArticle.link} className="hover:underline">{featuredArticle.title}</a></h2>
+              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-300">{featuredArticle.summary ?? t.insightBody}</p>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <a href={featuredArticle.link} className="rounded-xl bg-white px-5 py-3 font-semibold text-slate-950 hover:bg-teal-50">{t.labels.read}</a>
+                <a href="#newsletter" className="rounded-xl border border-slate-500 px-5 py-3 font-semibold hover:bg-slate-800">{lang === "en" ? "Subscribe for updates" : "订阅更新"}</a>
+              </div>
             </div>
-            <div className="space-y-5">
-              {t.gapSteps.map(([step, text]) => (
-                <div key={step} className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                  <div className="mb-1 font-semibold">{step}</div>
-                  <div className="text-sm leading-relaxed text-slate-300">{text}</div>
-                </div>
-              ))}
+            <div className="relative flex min-h-56 flex-col justify-center border-t border-slate-700 bg-slate-900 p-7 md:border-l md:border-t-0 md:p-10" aria-hidden="true">
+              <p className="text-xs uppercase tracking-widest text-teal-300">{featuredArticle.tag}</p>
+              <svg viewBox="0 0 300 150" className="my-4 w-full" fill="none">
+                <circle cx="75" cy="75" r="43" stroke="#5eead4" strokeWidth="2" opacity=".8"/>
+                <circle cx="75" cy="75" r="24" stroke="#5eead4" strokeDasharray="4 5"/>
+                <path d="M55 65 Q75 42 95 65 T95 88 Q75 110 55 88" stroke="#99f6e4" strokeWidth="2"/>
+                <path d="M121 75 H170 M162 67 L170 75 L162 83" stroke="#94a3b8" strokeWidth="2"/>
+                <circle cx="223" cy="75" r="49" stroke="#93c5fd" strokeWidth="2"/>
+                <circle cx="223" cy="75" r="19" fill="#1e3a5f" stroke="#93c5fd"/>
+                <path d="M196 34 L190 24 M223 26 V14 M250 34 L257 24 M272 75 H285 M174 75 H161 M250 116 L257 126 M223 124 V136 M196 116 L190 126" stroke="#93c5fd" strokeWidth="3" strokeLinecap="round"/>
+              </svg>
+              <div className="border-t border-slate-700 pt-4 text-sm text-slate-300">{lang === "en" ? "Science · Clinical evidence · Manufacturing" : "科学 · 临床证据 · 制造"}</div>
             </div>
-          </div>
+          </article>}
         </div>
       </section>
 
-      <section id="blog" className="px-6 py-20">
+      <section id="blog" className="scroll-mt-24 px-6 py-10 md:py-14">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <h2 className="mb-3 text-4xl font-bold tracking-tight">{t.blogTitle}</h2>
-              <p className="text-lg text-slate-600">{t.blogSubtitle}</p>
-            </div>
-            <input className="w-72 rounded-2xl border px-5 py-3" placeholder={t.labels.search} />
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+            <div><h2 className="text-3xl font-bold tracking-tight">{lang === "en" ? "More articles" : "更多文章"}</h2><p className="mt-2 text-slate-600">{t.blogSubtitle}</p></div>
+            <input type="search" value={query} onChange={e => setQuery(e.target.value)} aria-label={t.labels.search} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 sm:w-72" placeholder={t.labels.search}/>
           </div>
-
-          <div className="mb-8 flex flex-wrap gap-3">
-            {t.categories.map((category) => (
-              <span key={category} className="rounded-full border bg-white px-4 py-2 text-sm font-semibold text-slate-700">
-                {category}
-              </span>
-            ))}
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {secondaryArticles.map(insight => <article key={insight.link} className="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-wide text-teal-700">{insight.tag} · {insight.readTime}</p>
+              <h3 className="mt-3 text-xl font-bold leading-snug"><a href={insight.link} className="hover:underline">{insight.title}</a></h3>
+              <p className="my-4 text-sm leading-6 text-slate-600">{insight.summary ?? t.insightBody}</p>
+              <a href={insight.link} className="mt-auto font-semibold text-teal-800 hover:underline">{t.labels.read}</a>
+            </article>)}
           </div>
-          <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-  {/* Featured Article */}
-  <article className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
-    <div className="mb-5 flex flex-wrap items-center gap-3">
-      <span className="rounded-full bg-cyan-50 px-3 py-1 text-sm font-semibold text-cyan-700">
-        {featuredArticle.tag}
-      </span>
-      <span className="text-sm text-slate-500">{featuredArticle.readTime}</span>
-    </div>
-
-    <h3 className="mb-5 max-w-3xl text-4xl font-bold leading-tight tracking-tight text-slate-950">
-      {featuredArticle.title}
-    </h3>
-
-    <p className="mb-8 max-w-2xl text-lg leading-8 text-slate-600">
-      {t.insightBody}
-    </p>
-
-    <div className="mb-8 grid gap-3 sm:grid-cols-2">
-      {["Tech Transfer", "CAR-T Manufacturing", "LVV", "CGT Industrialization"].map(
-        (item) => (
-          <span
-            key={item}
-            className="rounded-2xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700"
-          >
-            {item}
-          </span>
-        )
-      )}
-    </div>
-
-    <a
-      href={featuredArticle.link}
-      className="inline-flex rounded-2xl bg-slate-950 px-6 py-3 font-semibold text-white transition hover:bg-slate-800"
-    >
-      {t.labels.read}
-    </a>
-  </article>
-
-  {/* Article List */}
-  <div className="grid gap-5">
-    {secondaryArticles.map((insight) => (
-      <article
-        key={insight.title}
-        className={`rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition ${
-          insight.status === "live"
-            ? "hover:-translate-y-1 hover:shadow-lg"
-            : "opacity-75"
-        }`}
-      >
-        <div className="mb-4 flex flex-wrap items-center gap-3">
-          <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-            {insight.tag}
-          </span>
-          <span className="text-xs font-medium text-slate-500">
-            {insight.readTime}
-          </span>
-        </div>
-
-        <h3 className="mb-4 text-2xl font-bold leading-snug text-slate-950">
-          {insight.title}
-        </h3>
-
-        <p className="mb-5 text-sm leading-6 text-slate-600">
-          {t.insightBody}
-        </p>
-
-        {insight.status === "live" ? (
-          <a
-            href={insight.link}
-            className="font-semibold text-slate-950 hover:underline"
-          >
-            {t.labels.read}
-          </a>
-        ) : (
-          <span className="font-semibold text-slate-400">
-            {t.labels.comingSoon}
-          </span>
-        )}
-      </article>
-    ))}
-  </div>
-</div>
+          {secondaryArticles.length === 0 && <p className="py-6 text-slate-600">{lang === "en" ? "No matching articles." : "没有匹配文章。"}</p>}
         </div>
       </section>
 
