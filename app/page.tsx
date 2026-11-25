@@ -149,6 +149,13 @@ export default function LentivirusVectorMVP() {
       ],
       insights: [
         {
+          title: "In Vivo CAR-T Clinical Update 2026: CD19/CD20 and BCMA Results",
+          tag: "Market Intelligence",
+          link: "/articles/in-vivo-car-t-clinical-results-2026",
+          status: "live",
+          readTime: "7 min read",
+        },
+        {
           title: "The Cost of Failure: How Poor Tech Transfer Destroys CAR-T Startups",
           tag: "Tech Transfer",
           link: "/articles/tech-transfer-destroys-car-t-startups",
@@ -317,6 +324,13 @@ export default function LentivirusVectorMVP() {
         { risk: "分析方法成熟度不足", score: "高", impact: "可比性与放行信心" },
       ],
       insights: [
+        {
+          title: "2026 体内 CAR-T 临床进展：CD19/CD20 与 BCMA（英文）",
+          tag: "市场情报",
+          link: "/articles/in-vivo-car-t-clinical-results-2026",
+          status: "live",
+          readTime: "7 分钟阅读",
+        },
         {
           title: "失败的成本：糟糕的技术转移如何摧毁 CAR-T 创业公司",
           tag: "技术转移",
